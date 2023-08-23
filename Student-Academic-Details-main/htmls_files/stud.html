@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+body
+{
+margin: 0;
+padding: 0;
+background-color:#25665b;
+font-family: 'Arial';
+}
+.login{
+width: 382px;
+overflow: hidden;
+margin: auto;
+margin: 20 0 0 450px;
+padding: 80px;
+background: #57b5a5;
+border-radius: 15px ;
+}
+h2{
+text-align: center;
+color: #000000;
+padding: 20px;
+}
+label{
+color: #000000;
+font-size: 17px;
+}
+#Uname{
+width: 300px;
+height: 30px;
+border: none;
+border-radius: 3px;
+padding-left: 8px;
+}
+#Pass{
+width: 300px;
+height: 30px;
+border: none;
+border-radius: 3px;
+padding-left: 8px;
+
+
+
+}
+#log{
+width: 300px;
+height: 30px;
+border: none;
+border-radius: 17px;
+padding-left: 7px;
+color: #000000;
+}
+span{
+color: white;
+font-size: 17px;
+}
+a{
+float: right;
+background-color: grey;
+}
+<title>Login Form</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</style>
+</head>
+<body>
+<form method="post">
+<h2>Student Login</h2><br>
+<div class="login">
+<form id="login" method="get" action="stud.php">
+<label><b>User Name
+</b>
+</label>
+<input type="text" name="Uname" id="Uname" placeholder="Username">
+<br><br>
+<label><b>Password
+</b>
+</label>
+<input type="Password" name="Pass" id="Pass" placeholder="Password">
+<br><br>
+<input type="submit" name="log" id="log" value="Log In"><a href="home.html"></a>
+<br><br>
+<br><br>
+</form>
+<?php
+session_start();
+if(isset($_POST['submit']))
+{
+$conn = mysqli_connect("localhost","root","","student_det");
+if(! $conn){
+die("Couldn't connect".mysqli_connect_error());}
+$reg=$_POST['reg'];
+$pwd=$_POST['password'];
+if($reg!=''&&$pwd!='')
+{
+$query=mysqli_query($conn,"select * from user_pw where reg_no='$reg' and pword='$pwd'");
+$res=mysqli_fetch_row($query);
+if($res)
+{
+$_SESSION['reg']=$reg;
+echo "<script>window.open('home.html','_self')</script>";
+}
+else
+{
+echo"<script>alert('You entered username or password is incorrect')</script>";
+}
+}
+else
+{
+echo"<script>alert('Enter both password and username')</script>";
+}
+}
+?>
+</body>
+</html>
